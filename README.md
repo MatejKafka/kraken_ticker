@@ -16,4 +16,5 @@ to console and if threshold is crossed, a system toast notification is shown.
 ## Dependencies:
  - `win10toast`
  - `websockets`
+
 (see `requirements.txt`)

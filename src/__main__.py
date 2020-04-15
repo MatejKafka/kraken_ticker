@@ -21,7 +21,7 @@ async def __main__(currency_pair, notification_threshold):
 		ask = float(msg[1]["a"][0])
 
 		print(f"{currency_str}: bid({bid}), ask({ask})")
-		if abs(ask - last_notified_ask) / last_notified_ask > notification_threshold:
+		if abs(ask - last_notified_ask) > notification_threshold:
 			last_notified_ask = ask
 			notifier.show_toast(currency_str + " ticker",
 				f"BID: {bid} {currency_pair[1]}\nASK: {ask} {currency_pair[1]}",

@@ -35,4 +35,14 @@ async def __main__(currency_pair, notification_threshold):
 if __name__ == "__main__":
 	currency_pair = (sys.argv[1], sys.argv[2])
 	notification_threshold = float(sys.argv[3])
-	asyncio.get_event_loop().run_until_complete(__main__(currency_pair, notification_threshold))
+
+	try:
+		asyncio.get_event_loop().run_until_complete(__main__(currency_pair, notification_threshold))
+	except Exception as err:
+		if not isinstance(err, SystemExit):
+			# if a terminating error occurs, log it
+			import traceback
+
+			with open("./error.log", "w") as fd:
+				fd.write(traceback.format_exc())
+			raise

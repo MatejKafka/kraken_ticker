@@ -15,12 +15,16 @@ async def __main__(currency_pair, notification_threshold):
 	last_notified_ask = 0.1
 	currency_str = "/".join(currency_pair)
 
+	print("")
+
 	def ticker_cb(msg):
 		nonlocal last_notified_ask
 		bid = float(msg[1]["b"][0])
 		ask = float(msg[1]["a"][0])
 
-		print(f"{currency_str}: bid({bid}), ask({ask})")
+		# added spaces to `end` to overwrite any leftover chars in case of longer price string
+		print(f"   {currency_str}: bid({bid}), ask({ask})", end="              \r", flush=True)
+
 		if abs(ask - last_notified_ask) > notification_threshold:
 			last_notified_ask = ask
 			notifier.show_toast(currency_str + " ticker",
@@ -29,7 +33,7 @@ async def __main__(currency_pair, notification_threshold):
 
 	await conn.subscribe_ticker(currency_pair, ticker_cb)
 	async for unhandled_msg in conn.start_listening():
-		print("unhandled server message:", unhandled_msg)
+		raise Exception("unhandled server message: " + str(unhandled_msg))
 
 
 if __name__ == "__main__":

@@ -1,11 +1,15 @@
-$SCRIPT_DIR = Split-Path $MyInvocation.MyCommand.Path -Parent
+cd $PSScriptRoot
 
-cd $SCRIPT_DIR
-if (Test-Path .\venv\Scripts\Activate.ps1) {
+$DisableVenv = $false
+if (-not $env:VIRTUAL_ENV -and (Test-Path .\venv\Scripts\Activate.ps1)) {
 	.\venv\Scripts\Activate.ps1
+	$DisableVenv = $true
 }
+
 try {
 	py -m src "ETH" "EUR" 1.0
 } finally {
-	deactivate # venv
+	if ($DisableVenv) {
+		deactivate
+	}
 }

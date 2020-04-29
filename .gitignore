@@ -2,3 +2,4 @@ __pycache__/
 /.idea/
 /kraken_ticker.iml
 /venv/
+/error.log

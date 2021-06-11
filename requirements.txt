@@ -1,4 +1,4 @@
 pypiwin32==223
 pywin32==227
-websockets==8.1
+websockets==9.1
 win10toast==0.9
